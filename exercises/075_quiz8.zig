@@ -49,7 +49,7 @@ const Path = struct {
 //
 // Please fill in the body of this function!
 fn makePath(from: *Place, to: *Place, dist: u8) Path {
-
+    return Path{ .from = from, .to = to, .dist = dist };
 }
 
 // Using our new function, these path definitions take up considerably less
@@ -151,8 +151,8 @@ const HermitsNotebook = struct {
 };
 
 pub fn main() void {
-    const start = &a;        // Archer's Point
-    const destination = &f;  // Fox Pond
+    const start = &a; // Archer's Point
+    const destination = &f; // Fox Pond
 
     // We could either have this:
     //
@@ -166,6 +166,8 @@ pub fn main() void {
     // or this comptime wizardry:
     //
     const letters = [_][]const u8{ "a", "b", "c", "d", "e", "f" };
+    // modifies variables in place at compile time. Here this refers to the
+    // file itself
     inline for (letters) |letter| {
         @field(@This(), letter).paths = @field(@This(), letter ++ "_paths")[0..];
     }

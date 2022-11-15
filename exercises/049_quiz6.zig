@@ -16,26 +16,30 @@ const Elephant = struct {
     visited: bool = false,
 
     // Elephant tail methods!
-    pub fn getTail(self: *Elephant) *Elephant {
+    pub fn getTail(self: *const Elephant) *Elephant {
         return self.tail.?; // Remember, this means "orelse unreachable"
     }
 
-    pub fn hasTail(self: *Elephant) bool {
+    pub fn hasTail(self: *const Elephant) bool {
         return (self.tail != null);
     }
 
     // Your Elephant trunk methods go here!
     // ---------------------------------------------------
+    pub fn getTrunk(self: *const Elephant) *Elephant {
+        return self.trunk.?; // Remember, this means "orelse unreachable"
+    }
 
-    ???
-
+    pub fn hasTrunk(self: *const Elephant) bool {
+        return (self.trunk != null);
+    }
     // ---------------------------------------------------
 
     pub fn visit(self: *Elephant) void {
         self.visited = true;
     }
 
-    pub fn print(self: *Elephant) void {
+    pub fn print(self: *const Elephant) void {
         // Prints elephant letter and [v]isited
         var v: u8 = if (self.visited) 'v' else ' ';
         std.debug.print("{u}{u} ", .{ self.letter, v });
@@ -61,6 +65,7 @@ pub fn main() void {
 }
 
 // This function visits all elephants twice, tails to trunks.
+// Pointer cannot be const since e.visit() modifies elephant
 fn visitElephants(first_elephant: *Elephant) void {
     var e = first_elephant;
 

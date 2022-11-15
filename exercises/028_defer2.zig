@@ -10,6 +10,10 @@ pub fn main() void {
     for (animals) |a| printAnimal(a);
 
     std.debug.print("done.\n", .{});
+
+    for (animals) |a| printAnimal1(a);
+
+    std.debug.print("done.\n", .{});
 }
 
 // This function is _supposed_ to print an animal name in parentheses
@@ -18,7 +22,7 @@ pub fn main() void {
 fn printAnimal(animal: u8) void {
     std.debug.print("(", .{});
 
-    std.debug.print(") ", .{}); // <---- how?!
+    defer std.debug.print(") ", .{}); // <---- how?!
 
     if (animal == 'g') {
         std.debug.print("Goat", .{});
@@ -34,4 +38,16 @@ fn printAnimal(animal: u8) void {
     }
 
     std.debug.print("Unknown", .{});
+}
+
+fn printAnimal1(animal: u8) void {
+    std.debug.print("(", .{});
+
+    const anmal = switch (animal) {
+        'g' => "Goat",
+        'c' => "Cat",
+        'd' => "Dog",
+        else => "Unknown",
+    };
+    std.debug.print("{s}) ", .{anmal});
 }

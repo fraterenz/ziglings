@@ -2,8 +2,12 @@
 // We were able to get a printable string out of a many-item
 // pointer by using a slice to assert a specific length.
 //
+// many-item (not printable) -> slice (printable)
+//
 // But can we ever GO BACK to a sentinel-terminated pointer
 // after we've "lost" the sentinel in a coercion?
+//
+// many-item -> many-item with sentinel (printable)
 //
 // Yes, we can. Zig's @ptrCast() builtin can do this. Check out
 // the signature:
@@ -21,7 +25,7 @@ pub fn main() void {
     const data: [*]const u8 = "Weird Data!";
 
     // Please cast 'data' to 'printable':
-    const printable: [*:0]const u8 = ???;
+    const printable: [*:0]const u8 = @ptrCast([*:0]const u8, data);
 
     print("{s}\n", .{printable});
 }

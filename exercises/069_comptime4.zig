@@ -16,7 +16,7 @@ const print = @import("std").debug.print;
 pub fn main() void {
     // Here we declare arrays of three different types and sizes
     // at compile time from a function call. Neat!
-    const s1 = makeSequence(u8, 3);  // creates a [3]u8
+    const s1 = makeSequence(u8, 3); // creates a [3]u8
     const s2 = makeSequence(u32, 5); // creates a [5]u32
     const s3 = makeSequence(i64, 7); // creates a [7]i64
 
@@ -34,7 +34,7 @@ pub fn main() void {
 // separate copy of the function for every size/type combination!
 // So in this case, three different functions will be generated
 // for you, each with machine code that handles that specific
-// data size and type.
+// data size and type. **monomorphization**.
 //
 // Please fix this function so that the 'size' parameter:
 //
@@ -42,8 +42,8 @@ pub fn main() void {
 //     2) Sets the size of the array of type T (which is the
 //        sequence we're creating and returning).
 //
-fn makeSequence(comptime T: type, ??? size: usize) [???]T {
-    var sequence: [???]T = undefined;
+fn makeSequence(comptime T: type, comptime size: usize) [size]T {
+    var sequence: [size]T = undefined;
     var i: usize = 0;
 
     while (i < size) : (i += 1) {
